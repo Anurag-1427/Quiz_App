@@ -83,10 +83,11 @@ const Profile: React.FC = () => {
     e.preventDefault();
     try {
       dispatch(updateUserStart());
-      const res = await fetch(`/api/user/update/${currentUser!._id}`, {
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}/api/user/update/${currentUser!._id}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
         },
         body: JSON.stringify(formData),
       });
@@ -112,8 +113,11 @@ const Profile: React.FC = () => {
   const handleDeleteAccount = async () => {
     try {
       dispatch(deleteUserStart());
-      const res = await fetch(`/api/user/delete/${currentUser!._id}`, {
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}/api/user/delete/${currentUser!._id}`, {
         method: "DELETE",
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+        }
       });
       const data = await res.json();
       if (data.success === false) {
@@ -135,7 +139,11 @@ const Profile: React.FC = () => {
 
   const handleSignOut = async () => {
     try {
-      await fetch("/api/auth/signout");
+      await fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}/api/auth/signout`, {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+        }
+      });
       dispatch(signOut());
     } catch (error) {
       console.log(error);

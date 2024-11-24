@@ -32,10 +32,11 @@ const SignIn = () => {
     e.preventDefault();
     try {
       dispatch(signInStart());
-      const res = await fetch("/api/auth/signin", {
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}/api/auth/signin`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
         },
         body: JSON.stringify(formData),
       });
