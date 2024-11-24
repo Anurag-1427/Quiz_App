@@ -12,7 +12,11 @@ const mongoURI = process.env.MONGODB_URI;
 connectDB(mongoURI);
 
 const app = express();
-app.use(cors());
+app.use(
+  cors({
+    origin: "*",
+  })
+);
 
 app.use(express.json());
 app.use(cookieParser());
