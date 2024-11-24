@@ -5,7 +5,8 @@ This is a quiz application built using MERN Stack.
 # Task: Online Practise Test Platform and Enhanced Testing.
 
 Implement a login and signup system with a personalized dashboard and an adaptive online quiz platform for students in grades 7 - 10.
-Requirements:
+
+# Requirements:
 
 **1. User authentication:**
 
