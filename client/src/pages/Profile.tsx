@@ -1,10 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, ChangeEvent, FormEvent } from "react";
 import {
   getDownloadURL,
   getStorage,
   ref,
   uploadBytesResumable,
+  UploadTaskSnapshot,
 } from "firebase/storage";
 import { app } from "../firebase";
 import {
@@ -17,34 +18,53 @@ import {
   signOut,
 } from "../redux/user/userSlice";
 
-const Profile = () => {
-  const dispatch = useDispatch();
-  const fileRef = useRef(null);
-  const [image, setImage] = useState(undefined);
-  const [imagePercent, setImagePercent] = useState(0);
-  const [imageError, setImageError] = useState(false);
-  const [formData, setFormData] = useState({});
-  const [updateSuccess, setUpdateSuccess] = useState(false);
+interface User {
+  _id: string;
+  username: string;
+  email: string;
+  profilePicture: string;
+}
 
-  const { currentUser, loading, error } = useSelector((state) => state.user);
+interface RootState {
+  user: {
+    currentUser: User | null;
+    loading: boolean;
+    error: string | boolean;
+  };
+}
+
+const Profile: React.FC = () => {
+  const dispatch = useDispatch();
+  const fileRef = useRef<HTMLInputElement | null>(null);
+  const [image, setImage] = useState<File | undefined>(undefined);
+  const [imagePercent, setImagePercent] = useState<number>(0);
+  const [imageError, setImageError] = useState<boolean>(false);
+  const [formData, setFormData] = useState<any>({});
+  const [updateSuccess, setUpdateSuccess] = useState<boolean>(false);
+
+  const { currentUser, loading, error } = useSelector(
+    (state: RootState) => state.user
+  );
+
   useEffect(() => {
     if (image) {
       handleFileUpload(image);
     }
   }, [image]);
-  const handleFileUpload = async (image) => {
+
+  const handleFileUpload = async (image: File) => {
     const storage = getStorage(app);
     const fileName = new Date().getTime() + image.name;
     const storageRef = ref(storage, fileName);
     const uploadTask = uploadBytesResumable(storageRef, image);
     uploadTask.on(
       "state_changed",
-      (snapshot) => {
+      (snapshot: UploadTaskSnapshot) => {
         const progress =
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         setImagePercent(Math.round(progress));
       },
-      (error) => {
+      () => {
         setImageError(true);
       },
       () => {
@@ -54,15 +74,16 @@ const Profile = () => {
       }
     );
   };
-  const handleChange = (e) => {
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     try {
       dispatch(updateUserStart());
-      const res = await fetch(`/api/user/update/${currentUser._id}`, {
+      const res = await fetch(`/api/user/update/${currentUser!._id}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -76,15 +97,22 @@ const Profile = () => {
       }
       dispatch(updateUserSuccess(data));
       setUpdateSuccess(true);
-    } catch (error) {
-      dispatch(updateUserFailure(error));
+    } catch (error: unknown) {
+      // Check if the error is an instance of Error or a string
+      if (error instanceof Error) {
+        dispatch(updateUserFailure(error.message)); // Using error.message if it's an instance of Error
+      } else if (typeof error === "string") {
+        dispatch(updateUserFailure(error)); // If it's a string
+      } else {
+        dispatch(updateUserFailure("An unknown error occurred")); // Default error message
+      }
     }
   };
 
   const handleDeleteAccount = async () => {
     try {
       dispatch(deleteUserStart());
-      const res = await fetch(`/api/user/delete/${currentUser._id}`, {
+      const res = await fetch(`/api/user/delete/${currentUser!._id}`, {
         method: "DELETE",
       });
       const data = await res.json();
@@ -93,8 +121,15 @@ const Profile = () => {
         return;
       }
       dispatch(deleteUserSuccess(data));
-    } catch (error) {
-      dispatch(deleteUserFailure(error));
+    } catch (error: unknown) {
+      // Check if the error is an instance of Error or a string
+      if (error instanceof Error) {
+        dispatch(updateUserFailure(error.message)); // Using error.message if it's an instance of Error
+      } else if (typeof error === "string") {
+        dispatch(updateUserFailure(error)); // If it's a string
+      } else {
+        dispatch(updateUserFailure("An unknown error occurred")); // Default error message
+      }
     }
   };
 
@@ -135,28 +170,24 @@ const Profile = () => {
           ref={fileRef}
           hidden
           accept="image/*"
-          onChange={(e) => setImage(e.target.files[0])}
+          onChange={(e) =>
+            setImage(e.target.files ? e.target.files[0] : undefined)
+          }
         />
-
-        {/* firebase storage rules:  
-      allow read;
-      allow write: if
-      request.resource.size < 2 * 1024 * 1024 &&
-      request.resource.contentType.matches('image/.*') */}
         <button
           type="button"
           className="h-24 w-24 self-center rounded-full overflow-hidden mt-2 focus:outline-none"
-          onClick={() => fileRef.current.click()}
+          onClick={() => fileRef.current?.click()}
         >
           <img
-            src={formData.profilePicture || currentUser.profilePicture}
+            src={formData.profilePicture || currentUser?.profilePicture}
             alt="profile"
             className="h-full w-full object-cover"
           />
         </button>
         <p className="text-sm self-center">{getImageStatusMessage()}</p>
         <input
-          defaultValue={currentUser.username}
+          defaultValue={currentUser?.username}
           type="text"
           id="username"
           placeholder="Username"
@@ -164,7 +195,7 @@ const Profile = () => {
           onChange={handleChange}
         />
         <input
-          defaultValue={currentUser.email}
+          defaultValue={currentUser?.email}
           type="email"
           id="email"
           placeholder="Email"

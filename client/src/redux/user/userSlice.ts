@@ -1,6 +1,19 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-const initialState = {
+interface User {
+  id: string;
+  username: string;
+  email: string;
+  profilePicture: string;
+}
+
+interface UserState {
+  currentUser: User | null;
+  loading: boolean;
+  error: string | false;
+}
+
+const initialState: UserState = {
   currentUser: null,
   loading: false,
   error: false,
@@ -13,24 +26,24 @@ const userSlice = createSlice({
     signInStart: (state) => {
       state.loading = true;
     },
-    signInSuccess: (state, action) => {
+    signInSuccess: (state, action: PayloadAction<User>) => {
       state.currentUser = action.payload;
       state.loading = false;
       state.error = false;
     },
-    signInFailure: (state, action) => {
+    signInFailure: (state, action: PayloadAction<string>) => {
       state.loading = false;
       state.error = action.payload;
     },
     updateUserStart: (state) => {
       state.loading = true;
     },
-    updateUserSuccess: (state, action) => {
+    updateUserSuccess: (state, action: PayloadAction<User>) => {
       state.currentUser = action.payload;
       state.loading = false;
       state.error = false;
     },
-    updateUserFailure: (state, action) => {
+    updateUserFailure: (state, action: PayloadAction<string>) => {
       state.loading = false;
       state.error = action.payload;
     },
@@ -42,7 +55,7 @@ const userSlice = createSlice({
       state.loading = false;
       state.error = false;
     },
-    deleteUserFailure: (state, action) => {
+    deleteUserFailure: (state, action: PayloadAction<string>) => {
       state.loading = false;
       state.error = action.payload;
     },

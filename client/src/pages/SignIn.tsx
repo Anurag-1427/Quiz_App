@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, ChangeEvent, FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
   signInStart,
@@ -8,17 +8,27 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import OAuth from "../components/OAuth";
 
-const SignIn = () => {
-  const [formData, setFormData] = useState({});
-  const { loading, error } = useSelector((state) => state.user);
+interface FormData {
+  email: string;
+  password: string;
+}
 
+const SignIn = () => {
+  const [formData, setFormData] = useState<FormData>({
+    email: "",
+    password: "",
+  });
+  const { loading, error } = useSelector((state: any) => state.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const handleChange = (e) => {
+
+  // Handle input change
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
+  // Handle form submit
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     try {
       dispatch(signInStart());
@@ -36,10 +46,15 @@ const SignIn = () => {
       }
       dispatch(signInSuccess(data));
       navigate("/");
-    } catch (error) {
-      dispatch(signInFailure(error));
+    } catch (error: unknown) {
+      dispatch(
+        signInFailure(
+          error instanceof Error ? error.message : "An unknown error occurred"
+        )
+      );
     }
   };
+
   return (
     <div className="p-3 max-w-lg mx-auto">
       <h1 className="text-3xl text-center font-semibold my-7">Sign In</h1>
@@ -49,6 +64,7 @@ const SignIn = () => {
           placeholder="Email"
           id="email"
           className="bg-slate-100 p-3 rounded-lg"
+          value={formData.email}
           onChange={handleChange}
         />
         <input
@@ -56,6 +72,7 @@ const SignIn = () => {
           placeholder="Password"
           id="password"
           className="bg-slate-100 p-3 rounded-lg"
+          value={formData.password}
           onChange={handleChange}
         />
         <button

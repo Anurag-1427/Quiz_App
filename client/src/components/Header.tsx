@@ -1,8 +1,16 @@
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { RootState } from "../redux/store";
+
+interface CurrentUser {
+  profilePicture: string;
+}
 
 export default function Header() {
-  const { currentUser } = useSelector((state) => state.user);
+  const { currentUser } = useSelector((state: RootState) => state.user) as {
+    currentUser: CurrentUser | null;
+  };
+
   return (
     <div className="bg-slate-200">
       <div className="flex justify-between items-center max-w-6xl mx-auto p-3">
