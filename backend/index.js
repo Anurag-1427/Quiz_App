@@ -7,6 +7,7 @@ import cookieParser from "cookie-parser";
 
 dotenv.config();
 
+const PORT = process.env.PORT;
 const mongoURI = process.env.MONGODB_URI;
 connectDB(mongoURI);
 
@@ -15,8 +16,8 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 
-app.listen(3000, () => {
-  console.log(`Server listening on port 3000`);
+app.listen(PORT, () => {
+  console.log(`Server listening on port: ${PORT}`);
 });
 
 app.use("/api/user", userRoutes);
