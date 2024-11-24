@@ -15,7 +15,7 @@ connectDB(mongoURI);
 const app = express();
 app.use(
   cors({
-    origin: "https://quiz-app-frontend-blue.vercel.app",
+    origin: "*",
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: [
       "Content-Type",
