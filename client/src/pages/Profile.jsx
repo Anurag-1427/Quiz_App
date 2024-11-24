@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useRef, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
   getDownloadURL,
   getStorage,
@@ -19,8 +19,8 @@ import {
 
 const Profile = () => {
   const dispatch = useDispatch();
-  const fileRef = useRef(null);
-  const [image, setImage] = useState(undefined);
+  // const fileRef = useRef(null);
+  // const [image, setImage] = useState(undefined);
   const [imagePercent, setImagePercent] = useState(0);
   const [imageError, setImageError] = useState(false);
   const [formData, setFormData] = useState({});
