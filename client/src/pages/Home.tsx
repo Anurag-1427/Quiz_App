@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Home: React.FC = () => {
   return (
@@ -20,9 +21,9 @@ const Home: React.FC = () => {
         question. By which you saves your time and energy and put that to
         understand many other concepts.
       </p>
-      <button className="mt-4 bg-blue-600 text-white p-2 rounded max-w-32 mx-auto">
+      <Link to='/quiz' className="mt-4 bg-blue-600 text-white p-2 rounded max-w-32 mx-auto">
         Start Quiz
-      </button>
+      </Link>
     </div>
   );
 };

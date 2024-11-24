@@ -22,6 +22,7 @@ app.use(
       "Authorization",
       "Access-Control-Allow-Origin",
     ],
+    credentials: true,
   })
 );
 
