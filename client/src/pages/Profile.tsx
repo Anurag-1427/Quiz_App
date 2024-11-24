@@ -113,11 +113,8 @@ const Profile: React.FC = () => {
   const handleDeleteAccount = async () => {
     try {
       dispatch(deleteUserStart());
-      const res = await fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}/api/user/delete/${currentUser!._id}`, {
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}/api/user/delete/${currentUser?._id}`, {
         method: "DELETE",
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-        }
       });
       const data = await res.json();
       if (data.success === false) {
