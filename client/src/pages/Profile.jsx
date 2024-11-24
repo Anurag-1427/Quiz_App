@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useRef, useState, useEffect } from "react";
 import {
   getDownloadURL,
@@ -7,7 +7,6 @@ import {
   uploadBytesResumable,
 } from "firebase/storage";
 import { app } from "../firebase";
-import { useDispatch } from "react-redux";
 import {
   updateUserStart,
   updateUserSuccess,
@@ -21,7 +20,6 @@ import {
 const Profile = () => {
   const dispatch = useDispatch();
   const fileRef = useRef(null);
-  let imageStatusMessage = "";
   const [image, setImage] = useState(undefined);
   const [imagePercent, setImagePercent] = useState(0);
   const [imageError, setImageError] = useState(false);
