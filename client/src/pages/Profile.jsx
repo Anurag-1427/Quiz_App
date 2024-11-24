@@ -130,19 +130,19 @@ const Profile = () => {
     <div className="p-3 max-w-lg mx-auto">
       <h1 className="text-3xl font-semibold text-center my-7">Profile</h1>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-        <input
+        {/* <input
           type="file"
           ref={fileRef}
           hidden
           accept="image/*"
           onChange={(e) => setImage(e.target.files[0])}
         />
-        {/* 
-      firebase storage rules:  
+        
+       firebase storage rules:  
       allow read;
       allow write: if
       request.resource.size < 2 * 1024 * 1024 &&
-      request.resource.contentType.matches('image/.*') */}
+       request.resource.contentType.matches('image/.*')
         <button
           type="button"
           className="h-24 w-24 self-center rounded-full overflow-hidden mt-2 focus:outline-none"
@@ -153,7 +153,7 @@ const Profile = () => {
             alt="profile"
             className="h-full w-full object-cover"
           />
-        </button>
+        </button> */}
         <p className="text-sm self-center">{getImageStatusMessage()}</p>
         <input
           defaultValue={currentUser.username}
