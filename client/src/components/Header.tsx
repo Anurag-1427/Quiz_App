@@ -14,11 +14,11 @@ export default function Header() {
   return (
     <div className="bg-slate-200">
       <div className="flex justify-between items-center max-w-6xl mx-auto p-3">
-        <Link to="/">
+        <Link to="/home">
           <h1 className="font-bold">EduChamp Quiz App</h1>
         </Link>
         <ul className="flex gap-4">
-          <Link to="/">
+          <Link to="/home">
             <li>Home</li>
           </Link>
           <Link to="/about">
