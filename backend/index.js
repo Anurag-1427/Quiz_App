@@ -13,19 +13,19 @@ const mongoURI = process.env.MONGODB_URI;
 connectDB(mongoURI);
 
 const app = express();
-app.use(
-  cors({
-    origin: "*",
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: [
-      "Content-Type",
-      "Authorization",
-      "Access-Control-Allow-Origin",
-    ],
-    credentials: true,
-  })
-);
-
+// app.use(
+//   cors({
+//     origin: "*",
+//     methods: ["GET", "POST", "PUT", "DELETE"],
+//     allowedHeaders: [
+//       "Content-Type",
+//       "Authorization",
+//       "Access-Control-Allow-Origin",
+//     ],
+//     credentials: true,
+//   })
+// );
+app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
 
