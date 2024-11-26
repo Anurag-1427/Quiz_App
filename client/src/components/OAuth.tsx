@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { signInSuccess } from "../redux/user/userSlice";
 import { useNavigate } from "react-router-dom";
 import { AppDispatch } from "../redux/store";
+import { assets } from "../assets";
 
 export default function OAuth() {
   const dispatch = useDispatch<AppDispatch>();
@@ -22,7 +23,7 @@ export default function OAuth() {
         !result.user.photoURL
       ) {
         throw new Error(
-          "Google sign-in did not return all required user data."
+          assets.localized_strings["GOOGLE_LOGIN_DATA_ERROR"]
         );
       }
 
@@ -47,7 +48,7 @@ export default function OAuth() {
       dispatch(signInSuccess(data));
       navigate("/home");
     } catch (error) {
-      console.error("Could not login with Google", error);
+      console.error(assets.localized_strings["GOOGLE_LOGIN_ERROR"], error);
     }
   };
 
@@ -57,7 +58,7 @@ export default function OAuth() {
       onClick={handleGoogleClick}
       className="bg-red-700 text-white rounded-lg p-3 uppercase hover:opacity-95"
     >
-      Continue with Google
+      {assets.localized_strings["CONTINUE_WITH_GOOGLE"]}
     </button>
   );
 }

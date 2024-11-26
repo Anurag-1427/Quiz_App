@@ -1,6 +1,7 @@
 import { useState, ChangeEvent, FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import OAuth from "../components/OAuth";
+import { assets } from "../assets";
 
 interface FormData {
   username: string;
@@ -54,25 +55,25 @@ const SignUp = () => {
 
   return (
     <div className="p-3 max-w-lg mx-auto">
-      <h1 className="text-3xl text-center font-semibold my-7">Sign Up</h1>
+      <h1 className="text-3xl text-center font-semibold my-7">{assets.localized_strings["SIGN_UP_TEXT"]}</h1>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <input
           type="text"
-          placeholder="Username"
+          placeholder={assets.localized_strings["USERNAME_PLACEHOLDER"]}
           id="username"
           className="bg-slate-100 p-3 rounded-lg"
           onChange={handleChange}
         />
         <input
           type="email"
-          placeholder="Email"
+          placeholder={assets.localized_strings["EMAIL_PLACEHOLDER"]}
           id="email"
           className="bg-slate-100 p-3 rounded-lg"
           onChange={handleChange}
         />
         <input
           type="password"
-          placeholder="Password"
+          placeholder={assets.localized_strings["PASSWORD_PLACEHOLDER"]}
           id="password"
           className="bg-slate-100 p-3 rounded-lg"
           onChange={handleChange}
@@ -81,17 +82,17 @@ const SignUp = () => {
           disabled={loading}
           className="bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80"
         >
-          {loading ? "Loading..." : "Sign Up"}
+          {loading ? assets.localized_strings["LOADING_TEXT"] : assets.localized_strings["SIGN_UP_TEXT"]}
         </button>
         <OAuth />
       </form>
       <div className="flex gap-2 mt-5">
-        <p>Have an account?</p>
+        <p>{assets.localized_strings["HAVE_AN_ACCOUNT"]}</p>
         <Link to="/">
-          <span className="text-blue-500">Sign in</span>
+          <span className="text-blue-500">{assets.localized_strings["SIGN_IN_TEXT"]}</span>
         </Link>
       </div>
-      <p className="text-red-700 mt-5">{error && "Something went wrong!"}</p>
+      <p className="text-red-700 mt-5">{error && assets.localized_strings["SOMETHING_WENT_WRONG_ERROR"]}</p>
     </div>
   );
 };

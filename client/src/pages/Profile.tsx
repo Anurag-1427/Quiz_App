@@ -17,6 +17,7 @@ import {
   deleteUserFailure,
   signOut,
 } from "../redux/user/userSlice";
+import { assets } from "../assets";
 
 interface User {
   _id: string;
@@ -100,13 +101,12 @@ const Profile: React.FC = () => {
       dispatch(updateUserSuccess(data));
       setUpdateSuccess(true);
     } catch (error: unknown) {
-      // Check if the error is an instance of Error or a string
       if (error instanceof Error) {
-        dispatch(updateUserFailure(error.message)); // Using error.message if it's an instance of Error
+        dispatch(updateUserFailure(error.message))
       } else if (typeof error === "string") {
-        dispatch(updateUserFailure(error)); // If it's a string
+        dispatch(updateUserFailure(error));
       } else {
-        dispatch(updateUserFailure("An unknown error occurred")); // Default error message
+        dispatch(updateUserFailure(assets.localized_strings["UNKNOWN_ERROR_TEXT"]));
       }
     }
   };
@@ -124,13 +124,12 @@ const Profile: React.FC = () => {
       }
       dispatch(deleteUserSuccess(data));
     } catch (error: unknown) {
-      // Check if the error is an instance of Error or a string
       if (error instanceof Error) {
-        dispatch(updateUserFailure(error.message)); // Using error.message if it's an instance of Error
+        dispatch(updateUserFailure(error.message));
       } else if (typeof error === "string") {
-        dispatch(updateUserFailure(error)); // If it's a string
+        dispatch(updateUserFailure(error));
       } else {
-        dispatch(updateUserFailure("An unknown error occurred")); // Default error message
+        dispatch(updateUserFailure(assets.localized_strings["UNKNOWN_ERROR_TEXT"]));
       }
     }
   };
@@ -148,16 +147,16 @@ const Profile: React.FC = () => {
     if (imageError) {
       return (
         <span className="text-red-700">
-          Error uploading image (file size must be less than 2 MB)
+          {assets.localized_strings["ERROR_UPLOADING_IMAGE"]}
         </span>
       );
     } else if (imagePercent > 0 && imagePercent < 100) {
       return (
-        <span className="text-slate-700">{`Uploading: ${imagePercent} %`}</span>
+        <span className="text-slate-700">{`${assets.localized_strings["UPLOADING_TEXT"]} ${imagePercent} %`}</span>
       );
     } else if (imagePercent === 100) {
       return (
-        <span className="text-green-700">Image uploaded successfully</span>
+        <span className="text-green-700">{assets.localized_strings["IMAGE_UPLOAD_SUCCESS"]}</span>
       );
     }
     return "";
@@ -165,7 +164,7 @@ const Profile: React.FC = () => {
 
   return (
     <div className="p-3 max-w-lg mx-auto">
-      <h1 className="text-3xl font-semibold text-center my-7">Profile</h1>
+      <h1 className="text-3xl font-semibold text-center my-7">{assets.localized_strings["PROFILE_TEXT"]}</h1>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <input
           type="file"
@@ -192,7 +191,7 @@ const Profile: React.FC = () => {
           defaultValue={currentUser?.username}
           type="text"
           id="username"
-          placeholder="Username"
+          placeholder={assets.localized_strings["USERNAME_PLACEHOLDER"]}
           className="bg-slate-100 rounded-lg p-3"
           onChange={handleChange}
         />
@@ -200,19 +199,19 @@ const Profile: React.FC = () => {
           defaultValue={currentUser?.email}
           type="email"
           id="email"
-          placeholder="Email"
+          placeholder={assets.localized_strings["EMAIL_PLACEHOLDER"]}
           className="bg-slate-100 rounded-lg p-3"
           onChange={handleChange}
         />
         <input
           type="password"
           id="password"
-          placeholder="Password"
+          placeholder={assets.localized_strings["PASSWORD_PLACEHOLDER"]}
           className="bg-slate-100 rounded-lg p-3"
           onChange={handleChange}
         />
         <button className="bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80">
-          {loading ? "Loading..." : "Update"}
+          {loading ? assets.localized_strings["LOADING_TEXT"] : assets.localized_strings["UPDATE_TEXT"]}
         </button>
       </form>
       <div className="flex justify-between mt-5">
@@ -220,15 +219,15 @@ const Profile: React.FC = () => {
           onClick={handleDeleteAccount}
           className="text-red-700 cursor-pointer"
         >
-          Delete Account
+          {assets.localized_strings["DELETE_ACCOUNT_TEXT"]}
         </button>
         <button onClick={handleSignOut} className="text-red-700 cursor-pointer">
-          Sign out
+          {assets.localized_strings["SIGN_OUT_TEXT"]}
         </button>
       </div>
       <p className="text-red-700 mt-5">{error && "Something went wrong!"}</p>
       <p className="text-green-700 mt-5">
-        {updateSuccess && "User is updated successfully!"}
+        {updateSuccess && assets.localized_strings["USER_UPDATE_SUCCESS"]}
       </p>
     </div>
   );

@@ -7,6 +7,7 @@ import {
 } from "../redux/user/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import OAuth from "../components/OAuth";
+import { assets } from "../assets";
 
 interface FormData {
   email: string;
@@ -50,7 +51,7 @@ const SignIn = () => {
     } catch (error: unknown) {
       dispatch(
         signInFailure(
-          error instanceof Error ? error.message : "An unknown error occurred"
+          error instanceof Error ? error.message : assets.localized_strings["UNKNOWN_ERROR_TEXT"]
         )
       );
     }
@@ -58,11 +59,11 @@ const SignIn = () => {
 
   return (
     <div className="p-3 max-w-lg mx-auto">
-      <h1 className="text-3xl text-center font-semibold my-7">Sign In</h1>
+      <h1 className="text-3xl text-center font-semibold my-7">{assets.localized_strings["SIGN_IN_TEXT"]}</h1>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <input
           type="email"
-          placeholder="Email"
+          placeholder={assets.localized_strings["EMAIL_PLACEHOLDER"]}
           id="email"
           className="bg-slate-100 p-3 rounded-lg"
           value={formData.email}
@@ -70,7 +71,7 @@ const SignIn = () => {
         />
         <input
           type="password"
-          placeholder="Password"
+          placeholder={assets.localized_strings["PASSWORD_PLACEHOLDER"]}
           id="password"
           className="bg-slate-100 p-3 rounded-lg"
           value={formData.password}
@@ -80,18 +81,18 @@ const SignIn = () => {
           disabled={loading}
           className="bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80"
         >
-          {loading ? "Loading..." : "Sign In"}
+          {loading ? assets.localized_strings["LOADING_TEXT"] : assets.localized_strings["SIGN_IN_TEXT"]}
         </button>
         <OAuth />
       </form>
       <div className="flex gap-2 mt-5">
-        <p>Do not have an account?</p>
+        <p>{assets.localized_strings["NOT_HAVE_ACCOUNT_TEXT"]}</p>
         <Link to="/sign-up">
-          <span className="text-blue-500">Sign up</span>
+          <span className="text-blue-500">{assets.localized_strings["SIGN_UP_TEXT"]}</span>
         </Link>
       </div>
       <p className="text-red-700 mt-5">
-        {error ? error.message || "Something went wrong!" : ""}
+        {error ? error.message || assets.localized_strings["SOMETHING_WENT_WRONG_ERROR"] : ""}
       </p>
     </div>
   );
