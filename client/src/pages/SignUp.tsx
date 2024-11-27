@@ -29,7 +29,7 @@ const SignUp = () => {
       setLoading(true);
       setError(false);
       const res = await fetch(
-        `${import.meta.env.VITE_BACKEND_BASE_URL}/api/auth/signup`,
+        `${import.meta.env.VITE_BACKEND_BASE_URL}api/auth/signup`,
         {
           method: "POST",
           headers: {

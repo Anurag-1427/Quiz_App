@@ -91,7 +91,7 @@ const Quiz: React.FC = () => {
 
     const startTest = async () => {
         try {
-            const response = await fetch("/api/quiz/start", {
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}api/quiz/start`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -114,7 +114,7 @@ const Quiz: React.FC = () => {
 
     const fetchNextQuestion = async () => {
         try {
-            const response = await fetch(`/api/quiz/question?userId=${userId}`, {
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}api/quiz/question?userId=${userId}`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -147,7 +147,7 @@ const Quiz: React.FC = () => {
             return;
         }
         try {
-            const response = await fetch("/api/quiz/answer", {
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}api/quiz/answer`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -173,7 +173,7 @@ const Quiz: React.FC = () => {
 
     const endTest = async () => {
         try {
-            const response = await fetch("/api/quiz/endTest", {
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}api/quiz/endTest`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -197,7 +197,7 @@ const Quiz: React.FC = () => {
 
     const fetchTestHistory = async () => {
         try {
-            const response = await fetch(`/api/quiz/testHistory?userId=${userId}`);
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}api/quiz/testHistory?userId=${userId}`);
 
             if (!response.ok) {
                 throw new Error(assets.localized_strings["NETWORK_ERROR"]);
