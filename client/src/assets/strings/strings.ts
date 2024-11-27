@@ -81,4 +81,23 @@ export const strings: { [key: string]: string } = {
     "Google sign-in did not return all required user data.",
   GOOGLE_LOGIN_ERROR: "Could not login with Google",
   CONTINUE_WITH_GOOGLE: "Continue with Google",
+
+  // QUIZ COMPONENT
+  NETWORK_ERROR: "Network response was not ok",
+  TRY_AGAIN: "Could not start the test. Please try again.",
+  NEXT_QUESTION_ERROR: "Could not fetch the next question. Please try again.",
+  ENTER_ANSWER: "Please enter an answer!",
+  TEST_NOT_SUBMIT_ERROR: "Could not submit the answer. Please try again.",
+  TEST_COMPLETE_STATS_SAVED: "Test complete. Your statistics have been saved.",
+  TEST_END_ERROR: "Could not end the test. Please try again.",
+  TEST_HISTORY_GET_ERROR: "Could not fetch test history. Please try again.",
+  START_TEST_TEXT: "Start Test",
+  END_TEST_TEXT: "End Test",
+  VIEW_TEST_HISTORY: "View Test History",
+  TEST_COMPLETE_TEXT: "Test Complete",
+  ESTIMATED_ABILITY: "Your estimated ability:",
+  QUESTION_TEXT: "Question",
+  SUBMIT_ANSWER_TEXT: "Submit Answer",
+  QUIZ_HEADER: "Computerized Adaptive Testing (CAT)",
+  NO_TEST_HISTORY: "No test history available",
 };

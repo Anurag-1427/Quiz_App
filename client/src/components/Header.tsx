@@ -20,7 +20,12 @@ export default function Header() {
         </Link>
         <ul className="flex gap-4">
           <Link to="/home">
-            <li>{assets.localized_strings["HOME_LINK"]}</li>
+            {currentUser ? (
+              <li>{assets.localized_strings["HOME_LINK"]}</li>
+            ) : (
+              <></>
+            )}
+
           </Link>
           <Link to="/about">
             <li>{assets.localized_strings["ABOUT_LINK"]}</li>
